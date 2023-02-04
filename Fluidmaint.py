@@ -4,11 +4,11 @@ print("Simple fluid replacement and maintenance trainer.\n")
 
 def menu():
 #Function for the menu
-    while True:        
+    while True:
         try:
 #tests responses to ensure that only integers are accepted
             menuchoice = int(input("Choose your difficulty level:\nPress 1 for fluid maintenance practice only (basic 4:2:1)\nPress 2 for maintenance and replacement practice\nPress 3 for instructions\n\n#"))
-            break        
+            break
         except ValueError:
             print("***Please choose a number***\n")
     if menuchoice == 1:
@@ -18,7 +18,9 @@ def menu():
         print('You have chosen maintenance and replacement practice, enter 0 at any time to return to the menu.\nIt is not necessary to provide units in your answer.\nIf you end up with a decimal, round down to the nearest integer.\n')
         fluidmaintreplace()
     elif menuchoice == 3:
-   
+        print('You have chosen clinical scenario practice, enter 0 at any time to return to the menu.\nIt is not necessary to provide units in your answer.\nIf you end up with a decimal, round down to the nearest integer.\n')
+        clinicalscenario()    
+    elif menuchoice == 4:
         print("\n+------INSTRUCTIONS-------+")
         print("MAINTENANCE: 4:2:1 algorithm for maintenance fluids is 4ml/kg of bodyweight/hr for the first 10kg an addional 2ml/kg/hr for every kilo between 11 and anď 20, then 1ml/kg/hr for each additional kilo.")
         print("\nREPLACEMENT: Volume loss is represented as a percentage of dehydration. E.g if a 12kg child is 5% dehydrated, we assume 1kg of bodyweight == 1 litre of fluid. So we need to replace 12kg x 0.05, which is 600ml.")
@@ -28,8 +30,7 @@ def menu():
     else:
         print("***Please select 1 or 2***\n")
         menu()#this part is lazy, I know
-        
-         
+
 
 def fluidmaint():
 # The 421 trainer
@@ -43,13 +44,13 @@ def fluidmaint():
         maintrate = extraweight * 2 + 40
     else:
         maintrate = ptweight * 4
-    while True:        
+    while True:
         try:
             questionbox = int(input("What is the maintenance rate in ml/hr for a %skg patient?\n#"%(ptweight)))
 #question displayed to the user.
             break        
         except ValueError:
-            print("Put an integer and try again") 
+            print("Put an integer and try again")
     if questionbox == maintrate:
         print("CORRECT, the maintenance rate is: %sml/hr\n"%(maintrate))
         fluidmaint()
@@ -116,46 +117,95 @@ def fluidmaintreplace():
         fluidmaintreplace()
 #restarts the function to generate a new question
 
+def clinicalscenario():
+    class bronchiolitis:
+        AGE = 0 # <6months =0, >6months =1
+        ADH = 0 # SIADH = 1
+        NG = 0 #		
+    class meningitis:
+        age = 0 
+        ADH = 0 #
+        NG = 0 #
+    class gastroenteritis:
+        age = 0 
+        ADH = 0 
+        NG = 0 #	
+    class shock:
+        age = 0 ##
+        ADH = 0 
+        NG = 0 	
+    class postDKA:
+        age = 0 ## 
+        ADH = 0 
+        NG = 0 
+    class others:
+        disease = ["viral induced wheeze", "asthma", ]
+        age = 0
+        ADH = 0 #
+        NG = 0
+
+    maintmultiplier = 1
+    ailment = random.randint(0,5)
+# bronchiolitis, will have ADH, probably not dehydrated
+    if ailment == 0:	#bronchiolitis
+        age = random.randint(0,1)
+        if age == 0:
+            ptweight = random.randint(2,7) #### find out normal weight for <6mo
+        elif age == 1:
+            ptweight = random.randint (8,12) ####### again
+        ADH = random.randint(0,1)
+        if ADH == 1:
+            maintmultiplier = 2/3
+            ptdehydration = 0
+        else:
+            ptdehydration = random.randint(0,5)
+        NG = 1
+#meningitis will have adh
+    elif ailment == 1: #meningitis
+        age = random.randint(0,1)
+        if age == 0:
+            ptweight = random.randint(2,7) #### find out normal weight for <6mo
+        elif age == 1:
+            ptweight = random.randint (7,14) ####### again
+        ADH = random.randint(0,1)
+        if ADH == 1:
+            maintmultiplier = 2/3
+        else:
+            ptdehydration = random.randint(0,5)            
+        NG = 0
+#gastroenteritis, moderate to high dehydration
+    elif ailment == 2: #gastroenteritis
+        age = 1
+        ptweight = random.randint (4,50) ####### again
+        ADH = 0
+        ptdehydration = random.randint(1,12)
+        if ptdehydration <9:
+            NG = 0
+        else:
+            NG = 1
+#shock. dehydration >9%    
+    elif ailment == 3: #shock
+        age = 1
+        ptweight = random.randint (3,50) ####### again
+        ADH = 0
+        NG = 0
+        ptdehydration = random.randint(10,15)
+#Post DKA high dehydration
+    elif ailment == 4: #postDKA
+        age = 1
+        ptweight = random.randint(12,50)
+        ADH = 0
+        NG = 0
+# Others include viral induced wheeze and asthma
+    elif ailment == 5: #others
+        age = random.randint(0,1)
+        if age == 0:
+            ptweight = random.randint(2,7) #### find out normal weight for <6mo
+        elif age == 1:
+            ptweight = random.randint (7,14) ####### again
+        ADH = random.randint(0,1)
+        if ADH == 1:
+            maintmultiplier = 2/3
 
 menu()
 #begins the program
-
-
-def hardmode()
-	class.bronchiolitis:
-		age = 0 #
-		ADH = 0 #
-		NG = 0 #		
-	class.meningitis:
-		age = 0 
-		ADH = 0 #
-		NG = 0 #
-	class.gastroenteritis:
-		age = 0 
-		ADH = 0 
-		NG = 0 #	
-	class.shock:
-		age = 0 ##
-		ADH = 0 
-		NG = 0 	
-	class.postDKA:
-		age = 0 ## 
-		ADH = 0 
-		NG = 0 
-	class.others:
-		disease = ["viral induced wheeze", "asthma", ]
-		age = 0
-		ADH = 0 #
-		NG = 0
-		
-	ailment = random.randint(0,5)
-	if ailment == 0:	#bronchiolitis
-		age = random.randint(0,1)
-		if age == 0:
-			ptweight = random.randint(2,7) #### find out normal weight for <6mo
-		elif age == 1:
-			ptweight = random.randint (7,14) ####### again
-		ADH = random.randint(0,1):
-		###if ADH == 1
-	elif aiment == 1: #meningitis
-		age = 0
